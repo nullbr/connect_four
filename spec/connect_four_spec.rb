@@ -11,8 +11,24 @@ RSpec.describe ConnectFour do
       "3 ⭕⭕⭕⭕⭕⭕⭕⭕\n"\
       "2 ⭕⭕⭕⭕⭕⭕⭕⭕\n"\
       "1 ⭕⭕⭕⭕⭕⭕⭕⭕\n"\
-      "   1 2 3 4 5 6 7 8"
+      '   1 2 3 4 5 6 7 8'
       expect(game.display_board).to eq(empty_board)
+    end
+  end
+
+  describe '#build_game' do
+    context 'returns an 6x8 array of arryas filled hollow circles' do
+      row = ['⭕', '⭕', '⭕', '⭕', '⭕', '⭕', '⭕', '⭕']
+
+      it 'row 1, contains 8 hollow circles' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        expect(game.build_game[0]).to eq(row)
+      end
+
+      it 'row 6, contains 8 hollow circles' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        expect(game.build_game[5]).to eq(row)
+      end
     end
   end
 end
