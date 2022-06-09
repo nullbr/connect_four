@@ -5,12 +5,12 @@ RSpec.describe ConnectFour do
     it 'returns an empty board' do
       game = ConnectFour.new('Bruno', 1, 'Giu', 2)
       empty_board = "   1 2 3 4 5 6 7 8\n"\
-      "6 ⭕⭕⭕⭕⭕⭕⭕⭕\n"\
-      "5 ⭕⭕⭕⭕⭕⭕⭕⭕\n"\
-      "4 ⭕⭕⭕⭕⭕⭕⭕⭕\n"\
-      "3 ⭕⭕⭕⭕⭕⭕⭕⭕\n"\
-      "2 ⭕⭕⭕⭕⭕⭕⭕⭕\n"\
-      "1 ⭕⭕⭕⭕⭕⭕⭕⭕\n"\
+      "6 ⭕⭕⭕⭕⭕⭕⭕⭕ 6\n"\
+      "5 ⭕⭕⭕⭕⭕⭕⭕⭕ 5\n"\
+      "4 ⭕⭕⭕⭕⭕⭕⭕⭕ 4\n"\
+      "3 ⭕⭕⭕⭕⭕⭕⭕⭕ 3\n"\
+      "2 ⭕⭕⭕⭕⭕⭕⭕⭕ 2\n"\
+      "1 ⭕⭕⭕⭕⭕⭕⭕⭕ 1\n"\
       '   1 2 3 4 5 6 7 8'
       expect(game.display_board).to eq(empty_board)
     end
@@ -44,6 +44,40 @@ RSpec.describe ConnectFour do
       it 'Giu puts a blue circle at position 1x8' do
         game.input(1, 8)
         expect(game.grid[0][7]).to eq('🔵')
+      end
+    end
+  end
+
+  describe '#input_valid?' do
+    context 'Check if input is out of grid:' do
+      game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+      it 'returns false if input x is out of grid' do
+        expect(game.input_valid?(-1, 0)).to_not be_truthy
+      end
+
+      it 'returns false if input y is out of grid' do
+        expect(game.input_valid?(1, 9)).to_not be_truthy
+      end
+    end
+
+    context 'Check if spot has been taken:' do
+      it 'returns false if input two in the same spot' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        game.input(1, 1)
+        expect(game.input_valid?(1, 1)).to_not be_truthy
+      end
+    end
+
+    context 'Check that a circle can only be placed on top of another one:' do
+      game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+      it 'returns false if input cannot be placed on row 2' do
+        expect(game.input_valid?(1, 2)).to_not be_truthy
+      end
+
+      it 'returns true if input is on top of an existing input' do
+        game.input(1, 1)
+        puts game.display_board
+        expect(game.input_valid?(1, 2)).to be_truthy
       end
     end
   end

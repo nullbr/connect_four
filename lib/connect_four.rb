@@ -16,7 +16,7 @@ class ConnectFour
     board = "   1 2 3 4 5 6 7 8\n"
     count = 6
     while count.positive?
-      board += "#{count} #{@grid[count - 1].join}\n"
+      board += "#{count} #{@grid[count - 1].join} #{count}\n"
       count -= 1
     end
     "#{board}   1 2 3 4 5 6 7 8"
@@ -36,5 +36,15 @@ class ConnectFour
   def input(x, y)
     @grid[x - 1][y - 1] = @current_player[:color]
     @current_player = @current_player == @player1 ? @player2 : @player1
+  end
+
+  # Check if input to grid is valid
+  def input_valid?(x, y)
+    # Input in the grid limits?
+    # Input taken?
+    # Input on row 1 or on top of another input?
+    x.between?(1, 8) && y.between?(1, 8)\
+      && (@grid[x - 1][y - 1] == '⭕')\
+      && (y == 1 || @grid[x - 1][y - 2] != '⭕')
   end
 end
