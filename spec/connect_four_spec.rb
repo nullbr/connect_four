@@ -31,4 +31,18 @@ RSpec.describe ConnectFour do
       end
     end
   end
+
+  describe '#input' do
+    context 'inputs a circle in a valid spot' do
+      game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+
+      it 'Bruno puts a white circle at position 1x1' do
+        game.input(1, 1)
+      end
+
+      it 'Giu puts a blue circle at position 1x8' do
+        game.input(1, 8)
+      end
+    end
+  end
 end
