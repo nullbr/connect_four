@@ -22,12 +22,12 @@ RSpec.describe ConnectFour do
 
       it 'row 1, contains 8 hollow circles' do
         game = ConnectFour.new('Bruno', 1, 'Giu', 2)
-        expect(game.build_game[0]).to eq(row)
+        expect(game.build_grid[0]).to eq(row)
       end
 
       it 'row 6, contains 8 hollow circles' do
         game = ConnectFour.new('Bruno', 1, 'Giu', 2)
-        expect(game.build_game[5]).to eq(row)
+        expect(game.build_grid[5]).to eq(row)
       end
     end
   end
@@ -38,10 +38,12 @@ RSpec.describe ConnectFour do
 
       it 'Bruno puts a white circle at position 1x1' do
         game.input(1, 1)
+        expect(game.grid[0][0]).to eq('⚪')
       end
 
       it 'Giu puts a blue circle at position 1x8' do
         game.input(1, 8)
+        expect(game.grid[0][7]).to eq('🔵')
       end
     end
   end
