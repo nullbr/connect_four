@@ -1,7 +1,9 @@
 class ConnectFour
-  COLORS = ['⭕', '⚪', '🔵', '🟡', '🟢', '🟣', '🟤'].freeze
+  COLORS = ['⚪', '🔵', '🟡', '🟢', '🟣', '🟤'].freeze
+  H_CIRCLE = '⭕'.freeze
 
-  attr_reader :grid
+  attr_accessor :grid
+  attr_reader :current_player
 
   # initialize players with their color choices and build game
   def initialize(player1, color1, player2, color2)
@@ -13,13 +15,13 @@ class ConnectFour
 
   # Returns the game grid
   def display_board
-    board = "   1 2 3 4 5 6 7 8\n"
+    board = " 1 2 3 4 5 6 7 8\n"
     count = 6
     while count.positive?
-      board += "#{count} #{@grid[count - 1].join} #{count}\n"
+      board += "#{@grid[count - 1].join}\n"
       count -= 1
     end
-    "#{board}   1 2 3 4 5 6 7 8"
+    "#{board} 1 2 3 4 5 6 7 8"
   end
 
   # Initialize the array of arrays containg all spots in the grid
@@ -27,24 +29,79 @@ class ConnectFour
     @grid = []
     6.times do |i|
       @grid << []
-      8.times { @grid[i] << '⭕' }
+      8.times { @grid[i] << H_CIRCLE }
     end
     @grid
   end
 
   # Takes position x and y, and inputs it in the board
-  def input(x, y)
-    @grid[x - 1][y - 1] = @current_player[:color]
-    @current_player = @current_player == @player1 ? @player2 : @player1
+  def input(x)
+    return unless input_valid?(x)
+
+    @last_input = input_where(x)
+    @grid[@last_input[0]][@last_input[1]] = @current_player[:color]
   end
 
   # Check if input to grid is valid
-  def input_valid?(x, y)
+  def input_valid?(x)
     # Input in the grid limits?
-    # Input taken?
-    # Input on row 1 or on top of another input?
-    x.between?(1, 8) && y.between?(1, 8)\
-      && (@grid[x - 1][y - 1] == '⭕')\
-      && (y == 1 || @grid[x - 1][y - 2] != '⭕')
+    x.between?(1, 8) && @grid[5][x - 1] == H_CIRCLE
+  end
+
+  # takes the last input and check if it caused the game to end
+  def game_over?
+    horizontally?
+  end
+
+  def next_player
+    @current_player = @current_player == @player1 ? @player2 : @player1
+  end
+
+  private
+
+  # a index x and input into row the correct row
+  def input_where(x)
+    return [0, x - 1] if @grid[0][x - 1] == H_CIRCLE
+
+    position = []
+    @grid.each_with_index do |row, idx|
+      next if idx.zero?
+
+      if row[x - 1] == H_CIRCLE
+        position = [idx, x - 1]
+        break
+      end
+    end
+    position
+  end
+
+  def horizontally?
+    y = @last_input[0]
+    x = @last_input[1]
+    if x.between?(0, 2) && check_right(x, y)
+      true
+    elsif x.between?(3, 4) && check_right(x, y) || check_left(x, y)
+      true
+    elsif check_left(x, y)
+      true
+    else
+      false
+    end
+  end
+
+  def check_right(x, y)
+    colors = []
+    4.times { |n| colors << @grid[y][x + n] }
+    same_colors?(colors)
+  end
+
+  def check_left(x, y)
+    colors = []
+    4.times { |n| colors << @grid[y][x - n] }
+    same_colors?(colors)
+  end
+
+  def same_colors?(colors)
+    colors.all? { |color| color == @current_player[:color] }
   end
 end
