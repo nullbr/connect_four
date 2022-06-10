@@ -111,7 +111,58 @@ RSpec.describe ConnectFour do
       end
     end
 
-    context 'returns false if no one has one:' do
+    context 'returns true if someone won verticaly:' do
+      it 'win at column 1' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        4.times { game.input(1) }
+        expect(game.game_over?).to be_truthy
+        puts game.display_board
+      end
+
+      it 'win at column 4' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        4.times { game.input(4) }
+        expect(game.game_over?).to be_truthy
+        puts game.display_board
+      end
+
+      it 'win at column 8' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        4.times { game.input(8) }
+        expect(game.game_over?).to be_truthy
+        puts game.display_board
+      end
+    end
+
+    context 'returns true if someone won diagonally:' do
+      it 'win down / left' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        3.times { n| game.grid[n][n] = '🔵' }
+        3.times { n| game.grid[n][n] = '🔵' }
+        expect(game.game_over?).to be_truthy
+        puts game.display_board
+      end
+
+      it 'win down / right' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        expect(game.game_over?).to be_truthy
+        puts game.display_board
+      end
+
+      it 'win up / left' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        expect(game.game_over?).to be_truthy
+        puts game.display_board
+      end
+
+      it 'win up / right' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        expect(game.game_over?).to be_truthy
+        puts game.display_board
+      end
+    end
+
+    context 'returns false if no one has won:' do
       it '3 inputs' do
         game = ConnectFour.new('Bruno', 1, 'Giu', 2)
         3.times { |n| game.input(n + 1) }
