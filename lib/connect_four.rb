@@ -78,30 +78,20 @@ class ConnectFour
   def horizontally?
     y = @last_input[0]
     x = @last_input[1]
-    if x.between?(0, 2) && check_right(x, y)
-      true
-    elsif x.between?(3, 4) && check_right(x, y) || check_left(x, y)
-      true
-    elsif check_left(x, y)
-      true
-    else
-      false
-    end
+    check_left(x, y) || check_right(x, y)
   end
 
   def check_right(x, y)
     colors = []
-    4.times { |n| colors << @grid[y][x + n] }
-    same_colors?(colors)
+    3.times { |n| colors << @grid[y][x + n + 1] }
+    puts colors
+    colors.all? { |color| color == @current_player[:color] }
   end
 
   def check_left(x, y)
     colors = []
-    4.times { |n| colors << @grid[y][x - n] }
-    same_colors?(colors)
-  end
-
-  def same_colors?(colors)
+    3.times { |n| colors << @grid[y][x - n - 1] }
+    puts colors
     colors.all? { |color| color == @current_player[:color] }
   end
 end

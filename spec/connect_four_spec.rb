@@ -110,5 +110,14 @@ RSpec.describe ConnectFour do
         expect(game.game_over?).to be_truthy
       end
     end
+
+    context 'returns false if no one has one:' do
+      it '3 inputs' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        3.times { |n| game.input(n + 1) }
+        expect(game.game_over?).to_not be_truthy
+        puts game.display_board
+      end
+    end
   end
 end
