@@ -50,7 +50,7 @@ class ConnectFour
 
   # takes the last input and check if it caused the game to end
   def game_over?
-    horizontally? || vertically?
+    horizontally? || vertically? || diagonally?
   end
 
   def next_player
@@ -99,6 +99,22 @@ class ConnectFour
     colors = []
     3.times { |n| colors << @grid[y - n][x] }
     equal_colors?(colors)
+  end
+
+  def diagonally?
+    y = @last_input[0]
+    x = @last_input[1]
+    down_left(x, y)
+  end
+
+  def down_left(x, y)
+    count = 0
+    3.times do 
+      x -= 1
+      y -= 1
+      @grid[x][y] == @current_player[:color] ? count += 1 : break 
+    end
+    count == 3 ? true : false 
   end
 
   def equal_colors?(colors)
