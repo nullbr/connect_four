@@ -137,28 +137,46 @@ RSpec.describe ConnectFour do
     context 'returns true if someone won diagonally:' do
       it 'win down / left' do
         game = ConnectFour.new('Bruno', 1, 'Giu', 2)
-        3.times { n| game.grid[n][n] = '🔵' }
-        3.times { n| game.grid[n][n] = '🔵' }
-        expect(game.game_over?).to be_truthy
+        3.times do |n| 
+          game.grid[n][n] = '🔵'
+          game.grid[n][3] = '⚪'
+        end
+        game.input(4)
         puts game.display_board
+        expect(game.game_over?).to be_truthy
       end
 
       it 'win down / right' do
         game = ConnectFour.new('Bruno', 1, 'Giu', 2)
-        expect(game.game_over?).to be_truthy
+        i = 3
+        3.times do |n|
+          game.grid[i - 1][n + 1] = '🔵'
+          game.grid[n][0] = '⚪'
+          i -= 1
+        end
+        game.input(1)
         puts game.display_board
+        expect(game.game_over?).to be_truthy
       end
 
       it 'win up / left' do
         game = ConnectFour.new('Bruno', 1, 'Giu', 2)
-        expect(game.game_over?).to be_truthy
+        i = 3
+        3.times do |n|
+          game.grid[i][n] = '🔵'
+          i -= 1
+        end
+        game.input(4)
         puts game.display_board
+        expect(game.game_over?).to be_truthy
       end
 
       it 'win up / right' do
         game = ConnectFour.new('Bruno', 1, 'Giu', 2)
-        expect(game.game_over?).to be_truthy
+        3.times { |n| game.grid[n + 1][n + 1] = '🔵' }
+        game.input(1)
         puts game.display_board
+        expect(game.game_over?).to be_truthy
       end
     end
 
