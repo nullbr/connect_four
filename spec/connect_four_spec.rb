@@ -163,10 +163,10 @@ RSpec.describe ConnectFour do
         game = ConnectFour.new('Bruno', 1, 'Giu', 2)
         i = 3
         3.times do |n|
-          game.grid[i][n] = '🔵'
+          game.grid[i][n + 1] = '🔵'
           i -= 1
         end
-        game.input(4)
+        game.input(5)
         puts game.display_board
         expect(game.game_over?).to be_truthy
       end

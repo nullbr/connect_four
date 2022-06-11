@@ -104,7 +104,7 @@ class ConnectFour
   def diagonally?
     y = @last_input[0]
     x = @last_input[1]
-    down_left(x, y)
+    down_left(x, y) || down_right(x, y) || up_right(x, y) || up_left(x, y)
   end
 
   def down_left(x, y)
@@ -112,7 +112,37 @@ class ConnectFour
     3.times do 
       x -= 1
       y -= 1
-      @grid[x][y] == @current_player[:color] ? count += 1 : break 
+      @grid[y][x] == @current_player[:color] ? count += 1 : break 
+    end
+    count == 3 ? true : false 
+  end
+
+  def down_right(x, y)
+    count = 0
+    3.times do 
+      y -= 1
+      x += 1
+      @grid[y][x] == @current_player[:color] ? count += 1 : break 
+    end
+    count == 3 ? true : false 
+  end
+
+  def up_right(x, y)
+    count = 0
+    3.times do 
+      y += 1
+      x -= 1
+      @grid[y][x] == @current_player[:color] ? count += 1 : break 
+    end
+    count == 3 ? true : false 
+  end
+
+  def up_left(x, y)
+    count = 0
+    3.times do 
+      x += 1
+      y += 1
+      @grid[y][x] == @current_player[:color] ? count += 1 : break 
     end
     count == 3 ? true : false 
   end
