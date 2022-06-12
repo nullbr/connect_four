@@ -10,7 +10,7 @@ class ConnectFour
     @player1 = { name: player1, color: COLORS[color1] }
     @player2 = { name: player2, color: COLORS[color2] }
     @grid = build_grid
-    @current_player = @player1
+    @current_player = nil
     @last_input = [0, 0]
   end
 
@@ -51,6 +51,8 @@ class ConnectFour
 
   # takes the last input and check if it caused the game to end
   def game_over?
+    return false if @current_player.nil?
+
     horizontally? || vertically? || diagonally?
   end
 

@@ -28,9 +28,9 @@ puts game.display_board
 puts game.game_over?
 
 while !game.game_over?
+    game.next_player
     puts "#{game.current_player[:name]} choose a column"
     game.input(gets.chomp.to_i)
-    game.next_player
     system 'clear'
     puts game.display_board
     first_play = false
