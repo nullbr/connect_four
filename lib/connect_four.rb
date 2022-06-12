@@ -104,7 +104,7 @@ class ConnectFour
   def diagonally?
     y = @last_input[0]
     x = @last_input[1]
-    down_left(x, y) || down_right(x, y) || up_right(x, y) || up_left(x, y)
+    check(x, y, 'down_left') || check(x, y, 'down_right') || check(x, y, 'up_right') || check(x, y, 'up_left')
   end
 
   def down_left(x, y)
@@ -149,5 +149,26 @@ class ConnectFour
 
   def equal_colors?(colors)
     colors.all? { |color| color == @current_player[:color] }
+  end
+
+  def check(x, y, mode)
+    count = 0
+    3.times do
+      if mode == 'down_left'
+        x -= 1
+        y -= 1
+      elsif mode == 'down_right'
+        x += 1
+        y -= 1
+      elsif mode == 'up_right'
+        x -= 1
+        y += 1
+      elsif mode == 'up_left'
+        x += 1
+        y += 1
+      end
+      @grid[y][x] == @current_player[:color] ? count += 1 : break 
+    end 
+    count == 3 ? true : false 
   end
 end
