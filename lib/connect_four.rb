@@ -11,6 +11,7 @@ class ConnectFour
     @player2 = { name: player2, color: COLORS[color2] }
     @grid = build_grid
     @current_player = @player1
+    @last_input = [0, 0]
   end
 
   # Returns the game grid
@@ -76,82 +77,20 @@ class ConnectFour
   end
 
   def horizontally?
-    y = @last_input[0]
-    x = @last_input[1]
-    check_left(x, y) || check_right(x, y)
-  end
-
-  def check_right(x, y)
-    colors = []
-    3.times { |n| colors << @grid[y][x + n + 1] }
-    equal_colors?(colors)
-  end
-
-  def check_left(x, y)
-    colors = []
-    3.times { |n| colors << @grid[y][x - n - 1] }
-    equal_colors?(colors)
+    check('left') || check('right')
   end
 
   def vertically?
-    y = @last_input[0] - 1
-    x = @last_input[1]
-    colors = []
-    3.times { |n| colors << @grid[y - n][x] }
-    equal_colors?(colors)
+    check('vertical')
   end
 
   def diagonally?
+    check('down_left') || check('down_right') || check('up_right') || check('up_left')
+  end
+
+  def check(mode)
     y = @last_input[0]
     x = @last_input[1]
-    check(x, y, 'down_left') || check(x, y, 'down_right') || check(x, y, 'up_right') || check(x, y, 'up_left')
-  end
-
-  def down_left(x, y)
-    count = 0
-    3.times do 
-      x -= 1
-      y -= 1
-      @grid[y][x] == @current_player[:color] ? count += 1 : break 
-    end
-    count == 3 ? true : false 
-  end
-
-  def down_right(x, y)
-    count = 0
-    3.times do 
-      y -= 1
-      x += 1
-      @grid[y][x] == @current_player[:color] ? count += 1 : break 
-    end
-    count == 3 ? true : false 
-  end
-
-  def up_right(x, y)
-    count = 0
-    3.times do 
-      y += 1
-      x -= 1
-      @grid[y][x] == @current_player[:color] ? count += 1 : break 
-    end
-    count == 3 ? true : false 
-  end
-
-  def up_left(x, y)
-    count = 0
-    3.times do 
-      x += 1
-      y += 1
-      @grid[y][x] == @current_player[:color] ? count += 1 : break 
-    end
-    count == 3 ? true : false 
-  end
-
-  def equal_colors?(colors)
-    colors.all? { |color| color == @current_player[:color] }
-  end
-
-  def check(x, y, mode)
     count = 0
     3.times do
       if mode == 'down_left'
@@ -166,7 +105,14 @@ class ConnectFour
       elsif mode == 'up_left'
         x += 1
         y += 1
+      elsif mode == 'right'
+        x += 1
+      elsif mode == 'left'
+        x -= 1
+      elsif mode == 'vertical'
+        y -= 1
       end
+
       @grid[y][x] == @current_player[:color] ? count += 1 : break 
     end 
     count == 3 ? true : false 
