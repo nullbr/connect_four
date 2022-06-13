@@ -1,10 +1,6 @@
 require './lib/connect_four'
 require 'yaml'
-
-gemfile true do
-  source 'http://rubygems.org'
-  gem 'ruby_figlet'
-end
+require 'ruby_figlet'
 
 def save_game(game, filename)
   Dir.mkdir('saved') unless Dir.exist?('saved')
@@ -17,7 +13,7 @@ def choose_saved_game
   puts 'Getting saved games...'
   options = []
   puts 'Choose from saved games: '
-  saved_games = Dir.entries('saved')[2..]
+  saved_games = Dir.entries('saved')[2..-1]
 
   saved_games.each_with_index do |filename, idx|
     puts "#{idx}: #{filename}"
