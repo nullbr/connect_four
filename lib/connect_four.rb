@@ -14,6 +14,10 @@ class ConnectFour
     @last_input = [0, 0]
   end
 
+  def colors
+    COLORS.each { |color| puts "1: #{color}" }
+  end
+
   # Returns the game grid
   def display_board
     board = " 1 2 3 4 5 6 7 8\n"
