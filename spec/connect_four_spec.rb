@@ -35,7 +35,6 @@ RSpec.describe ConnectFour do
   describe '#input' do
     game = ConnectFour.new('Bruno', 0, 'Giu', 1)
     context 'inputs a circle in a valid spot:' do
-
       it 'Bruno puts a white circle at position 1x1' do
         game.input(1)
         expect(game.grid[0][0]).to eq('⚪')
@@ -137,7 +136,7 @@ RSpec.describe ConnectFour do
     context 'returns true if someone won diagonally:' do
       it 'win down / left' do
         game = ConnectFour.new('Bruno', 1, 'Giu', 2)
-        3.times do |n| 
+        3.times do |n|
           game.grid[n][n] = '🔵'
           game.grid[n][3] = '⚪'
         end
@@ -187,6 +186,16 @@ RSpec.describe ConnectFour do
         expect(game.game_over?).to_not be_truthy
         puts game.display_board
       end
+    end
+
+    it 'Test input at last row' do
+      game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+      6.times do |_n|
+        game.next_player
+        game.input(1)
+      end
+      expect(game.game_over?).to_not be_truthy
+      puts game.display_board
     end
   end
 end
