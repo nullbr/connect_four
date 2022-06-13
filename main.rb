@@ -1,6 +1,6 @@
 require './lib/connect_four'
 require 'yaml'
-require 'ruby_figlet'
+require_relative '.bundle/ruby/2.5.0/gems/ruby_figlet-0.6.1/lib/ruby_figlet.rb'
 
 def save_game(game, filename)
   Dir.mkdir('saved') unless Dir.exist?('saved')
@@ -61,6 +61,13 @@ puts 'Connect Four'.art
 
 puts "\nLets Play!"
 
+puts "\nRules:\n"\
+  "\nThe goal is to connect 4 dots of the same color inline either horizontally, vertically or diagonally\n"\
+  "\nType end or quit to exit the game.\n"\
+  "\nThe game will be saved automatically as soon as the first person plays.\n"\
+  "\nHave fun!"
+
+puts "---------"
 if Dir.exist?('saved') && Dir.entries('saved').size > 2
   puts "0: to start a new game \n1: to load a game"
   choice = get_input([0, 1])
