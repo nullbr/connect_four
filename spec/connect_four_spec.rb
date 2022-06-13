@@ -188,14 +188,16 @@ RSpec.describe ConnectFour do
       end
     end
 
-    it 'Test input at last row' do
-      game = ConnectFour.new('Bruno', 1, 'Giu', 2)
-      6.times do |_n|
-        game.next_player
-        game.input(1)
+    context 'test input at last row:' do
+      it 'column 1' do
+        game = ConnectFour.new('Bruno', 1, 'Giu', 2)
+        6.times do |_n|
+          game.input(1)
+          game.next_player
+        end
+        puts game.display_board
+        expect(game.game_over?).to_not be_truthy
       end
-      expect(game.game_over?).to_not be_truthy
-      puts game.display_board
     end
   end
 end

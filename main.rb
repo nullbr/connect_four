@@ -1,22 +1,21 @@
 require './lib/connect_four'
 
-
 colors = ['⚪', '🔵', '🟡', '🟢', '🟣', '🟤']
 
-puts "Player 1"
+puts 'Player 1'
 player1 = gets.chomp
 system 'clear'
 
-puts "Pick a color"
+puts 'Pick a color'
 p colors
 color1 = gets.chomp.to_i
 system 'clear'
 
-puts "Player 2"
+puts 'Player 2'
 player2 = gets.chomp
 system 'clear'
 
-puts "Pick a color"
+puts 'Pick a color'
 p colors
 color2 = gets.chomp.to_i
 system 'clear'
@@ -25,15 +24,13 @@ game = ConnectFour.new(player1, color1, player2, color2)
 
 puts game.display_board
 
-puts game.game_over?
-
-while !game.game_over?
-    game.next_player
-    puts "#{game.current_player[:name]} choose a column"
-    game.input(gets.chomp.to_i)
-    system 'clear'
-    puts game.display_board
-    first_play = false
+until game.game_over?
+  puts "#{game.current_player[:name]} choose a column"
+  game.input(gets.chomp.to_i)
+  game.next_player
+  system 'clear'
+  puts game.display_board
 end
 
 puts 'Game Over!'
+puts "#{game.current_player} won!"
