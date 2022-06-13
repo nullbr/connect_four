@@ -4,7 +4,7 @@ require 'yaml'
 gemfile true do
   source 'http://rubygems.org'
   gem 'ruby_figlet'
- end
+end
 
 def save_game(game, filename)
   Dir.mkdir('saved') unless Dir.exist?('saved')
@@ -87,7 +87,7 @@ if choice.zero?
   puts "\nPick a color"
   colors.each_with_index { |color, idx| puts "#{idx}: #{color}" unless color1 == idx }
   color2 = gets.chomp.to_i
-  
+
   game = ConnectFour.new(player1, color1, player2, color2)
   system 'clear'
   puts game.display_board
