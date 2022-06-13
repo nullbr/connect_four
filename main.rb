@@ -1,6 +1,10 @@
 require './lib/connect_four'
-require 'ruby_figlet'
 require 'yaml'
+
+gemfile true do
+  source 'http://rubygems.org'
+  gem 'ruby_figlet'
+ end
 
 def save_game(game, filename)
   Dir.mkdir('saved') unless Dir.exist?('saved')
