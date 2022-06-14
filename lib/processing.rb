@@ -40,7 +40,7 @@ class Processing
         break
 
       # Check if string only contains an integer and its the correct type
-      elsif !(options == ' ') && input !~ /\D/
+      elsif options != ' ' && input !~ /\D/
         input = input.to_i
         options.include?(input) ? break : (print "Options are #{options} ")
 
