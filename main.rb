@@ -62,8 +62,7 @@ puts 'Connect Four'.art
 puts "\nLets Play!"
 
 puts "\nRules:\n"\
-  "\nThe goal is to connect 4 dots of the same color inline"\
-  "\neither horizontally, vertically or diagonally\n"\
+  "\nThe goal is to connect 4 dots of the same color inline either horizontally, vertically or diagonally\n"\
   "\nType end or quit to exit the game.\n"\
   "\nThe game will be saved automatically as soon as the first person plays.\n"\
   "\nHave fun!"
@@ -79,21 +78,18 @@ end
 # Start a new game
 if choice.zero?
   puts "\nName for Player 1"
-  player1 = get_input
+  player1 = gets.chomp
 
   puts "\nPick a color"
-  options = [0, 1, 2, 3, 4, 5]
   colors.each_with_index { |color, idx| puts "#{idx}: #{color}" }
-  color1 = get_input(options)
-  
-  options.delete(color1)
+  color1 = gets.chomp.to_i
 
   puts "\nPlayer 2"
-  player2 = get_input
+  player2 = gets.chomp
 
   puts "\nPick a color"
-  colors.each_with_index { |color, idx| puts "#{idx}: #{color}" unless idx == color1 }
-  color2 = get_input(options)
+  colors.each_with_index { |color, idx| puts "#{idx}: #{color}" unless color1 == idx }
+  color2 = gets.chomp.to_i
 
   game = ConnectFour.new(player1, color1, player2, color2)
   system 'clear'
