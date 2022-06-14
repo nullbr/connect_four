@@ -1,5 +1,7 @@
 ## Connect Four
 
+[![wakatime](https://wakatime.com/badge/user/9450441a-ff7b-4805-b841-897d35ef3820/project/23909936-a04f-4334-9147-45626245c767.svg)](https://wakatime.com/badge/user/9450441a-ff7b-4805-b841-897d35ef3820/project/23909936-a04f-4334-9147-45626245c767)
+
 Classic game Connect Four, written in ruby. A TOP project
 
 Play it at [Replit](https://replit.com/@nullbr/connectfour)
