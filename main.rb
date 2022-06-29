@@ -7,7 +7,7 @@ using RubyFiglet # For String.new(...).art / .art! Moneky Patches
 colors = ['⚪', '🔵', '🟡', '🟢', '🟣', '🟤']
 processing = Processing.new
 
-puts 'Connect Four'.art
+puts "Connect\nFour".art
 
 puts "\nLets Play!"
 
