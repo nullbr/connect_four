@@ -1,3 +1,5 @@
+require 'pry'
+
 class ConnectFour
   COLORS = ['⚪', '🔵', '🟡', '🟢', '🟣', '🟤'].freeze
   H_CIRCLE = '⭕'.freeze
@@ -58,8 +60,44 @@ class ConnectFour
     last_color = @grid[@last_input[0]][@last_input[1]]
     return false if last_color == H_CIRCLE
 
-    #    up/right, up/left, down/right, down/left, up,   right,   left
-    moves = [[1, 1], [1, -1], [-1, 1], [-1, -1], [-1, 0], [0, 1], [0, -1]]
+    
+    #binding.pry
+    
+    linear(last_color) || diagonal(last_color)
+  end
+
+  def next_player
+    @current_player = @current_player == @player1 ? @player2 : @player1
+  end
+
+  private
+
+  # diagonal move up/right, up/left, down/right, down/left
+  def diagonal(last_color)
+    moves = [[[1, 1], [-1, -1]], [[1, -1], [-1, 1]]]
+
+    moves.each do |move|
+      count = 0
+      move.each do |direction|
+        y = @last_input[0]
+        x = @last_input[1]
+        3.times do
+          y += direction[0]
+          x += direction[1]
+          break unless x.between?(0, 7) && y.between?(0, 5) && @grid[y][x] == last_color
+
+          count += 1
+        end
+      end
+      return true if count >= 3
+    end
+    false
+  end
+
+  # up,   right,   left
+  def linear(last_color)
+    moves = [[-1, 0], [0, 1], [0, -1]]
+    
     moves.each do |direction|
       y = @last_input[0]
       x = @last_input[1]
@@ -71,16 +109,10 @@ class ConnectFour
 
         count += 1
       end
-      return true if count == 3
+      return true if count >= 3
     end
     false
   end
-
-  def next_player
-    @current_player = @current_player == @player1 ? @player2 : @player1
-  end
-
-  private
 
   # a index x and input into row the correct row
   def input_where(x)
