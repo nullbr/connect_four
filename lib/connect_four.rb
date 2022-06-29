@@ -1,5 +1,3 @@
-require 'pry'
-
 class ConnectFour
   COLORS = ['⚪', '🔵', '🟡', '🟢', '🟣', '🟤'].freeze
   H_CIRCLE = '⭕'.freeze
@@ -60,9 +58,6 @@ class ConnectFour
     last_color = @grid[@last_input[0]][@last_input[1]]
     return false if last_color == H_CIRCLE
 
-    
-    #binding.pry
-    
     linear(last_color) || diagonal(last_color)
   end
 
@@ -97,7 +92,7 @@ class ConnectFour
   # up,   right,   left
   def linear(last_color)
     moves = [[-1, 0], [0, 1], [0, -1]]
-    
+
     moves.each do |direction|
       y = @last_input[0]
       x = @last_input[1]
